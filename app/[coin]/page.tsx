@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 import useWebSocket from '../hooks/useWebSocket';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { TiArrowBack } from 'react-icons/ti';
 
@@ -18,6 +19,7 @@ export default function CoinPage() {
 
     return (
         <main className='w-full min-h-screen h-full flex flex-col gap-4 items-center justify-center'>
+            <Image src={`/coins-icons/${coin}.png`} width={300} height={300} alt={`${coin} logo`} className="drop-shadow-lg"></Image>
             <header className='flex gap-6 items-center'>
                 <Link href={'/'} className='size-12 rounded-lg bg-gradient-to-b from-[#2e466e] from-5% to-[#415989] to-100% hover:from-[#415989] hover:to-[#2e466e] shadow-md flex justify-center items-center'>
                     <TiArrowBack size={50} color='#fff'/>

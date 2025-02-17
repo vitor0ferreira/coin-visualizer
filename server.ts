@@ -1,5 +1,3 @@
-
-
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { WebSocketServer } = require("ws");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -7,12 +5,12 @@ const WebSockets = require("ws");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { parse } = require("url")
 
-// Criar um WebSocket Server local na porta 8080
+
 const wss = new WebSocketServer({ port: 8080 });
 
 console.log("🚀 Servidor WebSocket rodando na porta 8080");
 
-// Quando um cliente se conecta ao WebSocket local
+
 wss.on("connection", (clientSocket, req) => {
   
   const coinMap = {
@@ -26,11 +24,11 @@ wss.on("connection", (clientSocket, req) => {
   
   const { query } = parse(req.url, true);
   const coinName = query.coin;
-  const coinSymbol = coinMap[coinName] // Converte para símbolo da API
+  const coinSymbol = coinMap[coinName]
 
   console.log(`✅ Cliente conectado para moeda: ${coinName} (${coinSymbol})`);
 
-  // Conectar ao WebSocket da Gemini
+
   const geminiSocket = new WebSockets(`wss://api.gemini.com/v1/marketdata/${coinSymbol}?top_of_book=true&trades=false`);
 
   geminiSocket.on("open", () => {
@@ -40,21 +38,21 @@ wss.on("connection", (clientSocket, req) => {
   let lastSentTime = 0;
   const interval = 2000;
 
-  // Quando recebemos dados da Gemini, enviamos para o cliente
+
   geminiSocket.on("message", (data) => {
     const nowDate = Date.now();
     if(nowDate - lastSentTime >= interval){
-      clientSocket.send(data.toString()); // Repassar os dados para o frontend
+      clientSocket.send(data.toString());
       lastSentTime = nowDate;
     }
   });
 
-  // Se houver um erro na conexão com a Gemini
+
   geminiSocket.on("error", (error) => {
     console.error("❌ Erro no WebSocket da Gemini:", error);
   });
 
-  // Se o WebSocket da Gemini fechar, desconectar o cliente também
+
   geminiSocket.on("close", () => {
     console.warn("⚠️ WebSocket da Gemini fechado");
     clientSocket.close();
