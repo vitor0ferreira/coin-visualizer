@@ -1,23 +1,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import { WsData } from "../types/GeminiWebsocketData";
 
-export interface WsData {
-  eventId: number
-  events: Event[]
-  socket_sequence: number
-  timestamp: number
-  timestampms: number
-  type: string
-}
-
-export interface Event {
-  delta: string
-  price: string
-  reason: string
-  remaining: string
-  side: string
-  type: string
-}
 
 export default function useWebSocket () {
   

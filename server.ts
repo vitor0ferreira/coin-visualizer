@@ -1,7 +1,9 @@
+import { WsData } from "./app/types/GeminiWebsocketData";
+
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { WebSocketServer } = require("ws");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const WebSockets = require("ws");
+const { WebSocket } = require("ws");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { parse } = require("url");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -31,7 +33,7 @@ wss.on("connection", (clientSocket: WebSocket, req: typeof IncomingMessage) => {
   console.log(`✅ Cliente conectado para moeda: ${coinName} (${coinSymbol})`);
 
 
-  const geminiSocket = new WebSockets(`wss://api.gemini.com/v1/marketdata/${coinSymbol}?top_of_book=true&trades=false`);
+  const geminiSocket = new WebSocket(`wss://api.gemini.com/v1/marketdata/${coinSymbol}?top_of_book=true&trades=false`);
 
   geminiSocket.on("open", () => {
     console.log(`✅ Conectado à Gemini para ${coinSymbol}!`);
@@ -41,7 +43,7 @@ wss.on("connection", (clientSocket: WebSocket, req: typeof IncomingMessage) => {
   const interval = 2000;
 
 
-  geminiSocket.on("message", (data: WebSocket.RawData) => {
+  geminiSocket.on("message", (data: WsData) => {
     const nowDate = Date.now();
     if(nowDate - lastSentTime >= interval){
       clientSocket.send(data.toString());
