@@ -12,9 +12,9 @@ export default function CoinPage() {
 
     const { "coin": coin } = useParams()
     const { data } = useWebSocket()
-    const priceColor = {
-        ask: "text-red-600",
-        bid: "text-green-700"
+    const priceColor:Record<string, string> = {
+        "ask": "text-red-600",
+        "bid": "text-green-700"
     }
 
     return (
