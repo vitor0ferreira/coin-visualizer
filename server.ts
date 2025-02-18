@@ -3,7 +3,9 @@ const { WebSocketServer } = require("ws");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const WebSockets = require("ws");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { parse } = require("url")
+const { parse } = require("url");
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { IncomingMessage } = require("http");
 
 
 const wss = new WebSocketServer({ port: 8080 });
@@ -11,15 +13,15 @@ const wss = new WebSocketServer({ port: 8080 });
 console.log("🚀 Servidor WebSocket rodando na porta 8080");
 
 
-wss.on("connection", (clientSocket, req) => {
+wss.on("connection", (clientSocket: WebSocket, req: typeof IncomingMessage) => {
   
-  const coinMap = {
-    bitcoin: "btcusd",
-    ethereum: "ethusd",
-    ripple: "xrpusd",
-    litecoin: "ltcusd",
-    dogecoin: "dogeusd",
-    solana: "solusd"
+  const coinMap:Record<string, string> = {
+    "bitcoin": "btcusd",
+    "ethereum": "ethusd",
+    "ripple": "xrpusd",
+    "litecoin": "ltcusd",
+    "dogecoin": "dogeusd",
+    "solana": "solusd"
   };
   
   const { query } = parse(req.url, true);
@@ -39,7 +41,7 @@ wss.on("connection", (clientSocket, req) => {
   const interval = 2000;
 
 
-  geminiSocket.on("message", (data) => {
+  geminiSocket.on("message", (data: WebSocket.RawData) => {
     const nowDate = Date.now();
     if(nowDate - lastSentTime >= interval){
       clientSocket.send(data.toString());
@@ -48,7 +50,7 @@ wss.on("connection", (clientSocket, req) => {
   });
 
 
-  geminiSocket.on("error", (error) => {
+  geminiSocket.on("error", (error: Error) => {
     console.error("❌ Erro no WebSocket da Gemini:", error);
   });
 
@@ -58,13 +60,13 @@ wss.on("connection", (clientSocket, req) => {
     clientSocket.close();
   });
 
-  // Se o cliente fechar a conexão, fechamos a conexão com a Gemini
+
   clientSocket.on("close", () => {
     console.warn("⚠️ Cliente desconectado, fechando WebSocket da Gemini...");
     geminiSocket.close();
   });
 
-  clientSocket.on("error", (error) => {
+  clientSocket.on("error", (error: Error) => {
     console.error("❌ Erro no WebSocket do cliente:", error);
   });
 });
