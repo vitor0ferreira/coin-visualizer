@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crypto Visualizer
 
-## Getting Started
+  
 
-First, run the development server:
+Um sistema de monitoramento de preços de criptomoedas em tempo real desenvolvido com Next.js e TypeScript.
+
+  
+
+## Descrição
+
+  
+
+O **Crypto Visualizer** é uma aplicação que exibe os preços das principais criptomoedas (Bitcoin, Ethereum, Dogecoin, Ripple, Solana, Litecoin) em tempo real utilizando a API WebSocket da Binance. Ao clicar em cada ativo, um modal é exibido com detalhes e gráficos de histórico de preços.
+
+  
+
+## Tecnologias Utilizadas
+
+  
+
+-  **Next.js** – Framework React com suporte a SSR e SSG.
+
+-  **TypeScript** – Tipagem estática para maior segurança e manutenção.
+
+-  **WebSockets** – Comunicação em tempo real com a API da Binance.
+
+-  **Tailwind CSS** – Estilização rápida e responsiva.
+
+-  **Recharts** – Exibição de gráficos interativos.
+
+-  **Radix UI / ShadCN UI** – Componentes de interface.
+
+  
+
+## Funcionalidades
+
+  
+
+- Monitoramento em tempo real dos preços das principais criptomoedas.
+
+- Página com gráficos detalhados do histórico de preços.
+
+- Alteração da cor do preço (verde para alta, vermelho para queda) com base em comparações de valores.
+
+- Atualizações controladas para evitar renderizações excessivas (por exemplo, atualizações a cada 2 segundos).
+
+  
+
+## Instalação
+
+  
+
+1.  **Clone o repositório:**
+
+  
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+	git clone https://github.com/seu-usuario/crypto-visualizer.git
+	cd crypto-monitor
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2.  **Instale as dependências**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+	npm install
+```
+ou  
+```bash
+	yarn  install
+```
+3.  **Configurar  TailwindCSS**
+```bash
+	npx tailwindcss init -p
+```
+4. **Execução do Projeto**
+	- Para rodar o projeto em ambiente de desenvolvimento:
+```bash
+	npm run dev
+```
+ou
+```bash
+	yarn dev
+```
+## Passo a Passo para Contribuir
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Fork o repositório**
+   - Clique no botão "Fork" no canto superior direito da página do repositório para criar uma cópia na sua conta do GitHub.
 
-## Learn More
+2. **Clone seu fork localmente**
+   - Abra o terminal e clone o seu repositório:
+     ```bash
+     git clone https://github.com/seu-usuario/crypto-visualizer.git
+     ```
+   - Entre no diretório do projeto:
+     ```bash
+     cd crypto-monitor
+     ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Crie uma branch para sua feature ou correção**
+   - Crie uma nova branch com um nome descritivo:
+     ```bash
+     git checkout -b minha-feature
+     ```
+   - Certifique-se de que sua branch esteja atualizada com a branch principal:
+     ```bash
+     git pull origin main
+     ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Implemente suas alterações**
+   - Faça as modificações ou adições necessárias ao código.
+   - Teste suas alterações para garantir que tudo funcione como esperado.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. **Commit suas alterações**
+   - Adicione os arquivos modificados:
+     ```bash
+     git add .
+     ```
+   - Faça um commit com uma mensagem clara e descritiva:
+     ```bash
+     git commit -m "Descrição clara da feature ou correção"
+     ```
 
-## Deploy on Vercel
+6. **Envie suas alterações para o GitHub**
+   - Faça push da sua branch para o seu fork:
+     ```bash
+     git push origin minha-feature
+     ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+7. **Abra um Pull Request**
+   - No GitHub, acesse a página do seu repositório e clique no botão "Compare & pull request".
+   - Revise suas alterações e adicione uma descrição detalhada do que foi modificado.
+   - Clique em "Create pull request" para submeter sua contribuição.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Padrões de Código e Boas Práticas
+
+- **Escreva código limpo e legível:** Utilize nomes de variáveis e funções descritivos.
+- **Mantenha os testes atualizados:** Se adicionar novas funcionalidades, crie ou atualize os testes existentes.
+- **Documente suas alterações:** Atualize o README e outros documentos se suas alterações afetarem a utilização do projeto.
+- **Siga o padrão de commit:** Utilize mensagens de commit claras e objetivas que expliquem o propósito das alterações.
