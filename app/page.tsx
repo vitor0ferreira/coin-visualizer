@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="w-full min-h-screen content-center place-items-center space-y-8 p-4">
-      <span className="font-semibold text-slate-200 text-4xl">Select a coin:</span>
+      <span className="font-semibold text-slate-900 text-4xl">Select a coin:</span>
       <section className="grid grid-cols-3 gap-4">
         <Link href={'/bitcoin'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
           Bitcoin

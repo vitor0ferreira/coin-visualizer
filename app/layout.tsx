@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
-
-const interFont = Inter({
-  variable: "--font-Inter",
+const robotoFont = Roboto({
+  variable: "--font-Roboto",
+  style: ["italic", "normal"],
   subsets: ["latin"],
-  weight: ["100", "400", "600", "700", "900"]
+  weight: ["100", "300", "400", "500", "700", "900"]
 })
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body
-        className={`${interFont.variable} antialiased bg-gradient-to-b from-blue-950 to-neutral-950`}
+        className={`${robotoFont.variable} antialiased bg-white`}
       >
         {children}
       </body>
