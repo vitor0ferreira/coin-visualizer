@@ -5,30 +5,34 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { TiArrowBack } from "react-icons/ti";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Chart from "@/components/Chart/Chart";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CoinPage() {
-  const { coin: coin } = useParams();
+  const { coin: coin } = useParams()
+  const coinUrl = coin as string;
 
   const [coinLastPrice, setCoinLastPrice] = useState<number>(0);
   const [coinCurrentPrice, setCoinCurrentPrice] = useState<number>(0);
   const lastUpdateRef = useRef<number>(0);
 
-  const coinsList: Record<string, string> = {
-    bitcoin: "btcusdt",
-    ethereum: "ethusdt",
-    dogecoin: "dogeusdt",
-    ripple: "xrpusdt",
-    solana: "solusdt",
-    litecoin: "ltcusdt",
-  };
+
+    const coinsList = useMemo<Record<string, string>>(
+      () => ({
+        bitcoin: "btcusdt",
+        ethereum: "ethusdt",
+        dogecoin: "dogeusdt",
+        ripple: "xrpusdt",
+        solana: "solusdt",
+        litecoin: "ltcusdt",
+      }), []
+    );
 
 
   useEffect(() => {
     const ws = new WebSocket(
-      `wss://stream.binance.com:9443/ws/${coinsList[coin?.toLocaleString()!]}@trade`
+      `wss://stream.binance.com:9443/ws/${coinsList[coinUrl]}@trade`
     );
 
     ws.onmessage = (event) => {
@@ -44,11 +48,11 @@ export default function CoinPage() {
         lastUpdateRef.current = newTimestamp;
       }
     };
-
+    
     return () => {
       ws.close();
     };
-  }, [coin]);
+  }, [coinUrl, coinsList]);
 
   const priceChangeColor =
     coinLastPrice !== 0 && coinCurrentPrice !== 0
@@ -96,9 +100,7 @@ export default function CoinPage() {
 
       <section className="w-[80%] min-w-[280px] max-w-[1440px] min-h-fit p-4 rounded-2xl overflow-hidden bg-slate-200 shadow-[0_5px_10px_5px_rgba(0,0,0,0.15)]">
         <Chart
-          symbol={coinsList[
-            coin?.toLocaleString() ? coin?.toLocaleString() : "btcusdt"
-          ].toLocaleUpperCase()}
+          symbol={coinsList[coinUrl].toLocaleUpperCase()}
         />
       </section>
     </main>
