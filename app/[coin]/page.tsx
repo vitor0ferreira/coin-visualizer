@@ -70,18 +70,20 @@ export default function CoinPage() {
         >
           <TiArrowBack size={50} color="#fff" />
         </Link>
-        <Image
-          src={`/coins-icons/${coin}.png`}
-          width={150}
-          height={150}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          alt={`${coin} logo`}
-          priority
-          className="drop-shadow-lg"
-        ></Image>
-        <span className="text-4xl md:text-8xl text-slate-900 font-bold italic">
-          {coin?.toString().toLocaleUpperCase()}
-        </span>
+        <div className="flex flex-col sm:flex-row items-center justify-center">
+          <Image
+            src={`/coins-icons/${coin}.png`}
+            width={150}
+            height={150}
+            sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 33vw"
+            alt={`${coin} logo`}
+            priority
+            className="drop-shadow-lg"
+          ></Image>
+          <span className="text-4xl sm:text-6xl md:text-8xl text-slate-900 font-bold italic">
+            {coin?.toString().toLocaleUpperCase()}
+          </span>
+        </div>
       </header>
 
       {coinCurrentPrice == 0 ? (
@@ -89,16 +91,19 @@ export default function CoinPage() {
       ) : (
         <span
           id="price"
-          className="font-bold text-4xl bg-slate-200 p-4 rounded-lg shadow-md"
+          className="font-bold text-2xl flex flex-col items-center sm:flex-row bg-slate-200 p-4 rounded-lg shadow-md"
         >
-          Price: USDT
+          Preço: USDT
           <span className={`${priceChangeColor} text-5xl`}>
             &nbsp;{coinCurrentPrice.toPrecision(7)}
           </span>
         </span>
       )}
 
-      <section className="w-[80%] min-w-[280px] max-w-[1440px] min-h-fit p-4 rounded-2xl overflow-hidden bg-slate-200 shadow-[0_5px_10px_5px_rgba(0,0,0,0.15)]">
+      <span className="font-semibold italic text-lg">Gráfico atualizado a cada 1 minuto.</span>
+
+      <section className="w-[80%] min-w-[280px] max-w-[1440px] min-h-[400px] h-[400px] max-h-[800px] p-4 rounded-2xl overflow-hidden bg-slate-200 shadow-[0_5px_10px_5px_rgba(0,0,0,0.15)]">
+        <p className="font-semibold text-xl sm:text-2xl mb-4 block text-center">Preço médio nas últimas 24 horas. </p>
         <Chart
           symbol={coinsList[coinUrl].toLocaleUpperCase()}
         />
