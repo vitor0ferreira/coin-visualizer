@@ -25,10 +25,10 @@ export default function Chart({ symbol }: ChartProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1m&limit=20`);
-      const json = await res.json();
+      const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1h&limit=24`);
+      const jsonData = await res.json();
 
-      const formattedData = json.map((entry: CandleData) => ({
+      const formattedData = jsonData.map((entry: CandleData) => ({
         time: new Date(entry[0]).toLocaleTimeString(),
         price: parseFloat(entry[4]),
       }));
@@ -43,11 +43,11 @@ export default function Chart({ symbol }: ChartProps) {
   }, [symbol]);
 
   return (
-    <ResponsiveContainer width="100%" aspect={2.9}>
+    <ResponsiveContainer width="98%" height="80%">
       <LineChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" fontWeight={"700"} tickFormatter={(value) => `${value.slice(0, 5)}`}/>
-        <YAxis domain={["auto", "auto"]} />
+        <XAxis dataKey="time" fontWeight={"700"} tickFormatter={(value) => `${value.slice(0, 2)}h`}/>
+        <YAxis domain={["auto", "auto"]} fontWeight={700} color="#ff0000" padding={{ bottom: 40 }} />
         <Tooltip labelStyle={{fontWeight: "bold"}} />
         <Line
           type="monotone"

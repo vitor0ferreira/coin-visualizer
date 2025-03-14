@@ -1,35 +1,53 @@
 import Image from "next/image";
 import Link from "next/link";
+import { coinList } from "@/lib/coinDetails";
+import { Jersey10Font } from "@/lib/fonts";
+import faviconCoin from "@/public/coinIcon.png"
+import AddCoinButton from "@/components/AddCoinButton/AddCoinButton";
 
 export default function Home() {
+
+
   return (
-    <main className="w-full min-h-screen content-center place-items-center space-y-8 p-4">
-      <span className="font-semibold text-slate-900 text-4xl">Select a coin:</span>
-      <section className="grid grid-cols-3 gap-4">
-        <Link href={'/bitcoin'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
-          Bitcoin
-          <Image src={"/coins-icons/bitcoin.png"} width={500} height={500} alt="bitcoin logo" className="drop-shadow-lg"></Image>
-        </Link>
-        <Link href={'/ethereum'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
-          Ethereum
-          <Image src={"/coins-icons/ethereum.png"} width={500} height={500} alt="ethereum logo" className="drop-shadow-lg"></Image>
-        </Link>
-        <Link href={'/dogecoin'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
-          Dogecoin
-          <Image src={"/coins-icons/dogecoin.png"} width={500} height={500} alt="dogecoin logo" className="drop-shadow-lg"></Image>
-        </Link>
-        <Link href={'/ripple'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
-          Ripple
-          <Image src={"/coins-icons/ripple.png"} width={500} height={500} alt="ripple logo" className="drop-shadow-lg"></Image>
-        </Link>
-        <Link href={'/solana'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
-          Solana
-          <Image src={"/coins-icons/solana.png"} width={500} height={500} alt="solana logo" className="drop-shadow-lg"></Image>
-        </Link>
-        <Link href={'/litecoin'} className="bg-gradient-to-br from-slate-700 to-blue-950 hover:saturate-150 hover:brightness-110 transition duration-300 p-4 rounded-md min-h-min h-40 min-w-min w-52 text-2xl text-center font-semibold text-white">
-          Litecoin
-          <Image src={"/coins-icons/litecoin.png"} width={500} height={500} alt="litecoin logo" className="drop-shadow-lg"></Image>
-        </Link>
+    <main className="w-full min-h-screen content-center place-items-center space-y-4 p-4 select-none">
+      <h1 className={`flex flex-col md:flex-row items-center gap-4 whitespace-nowrap text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] xl:text-[10rem] text-blue-900 ${Jersey10Font.className}`}>
+        <Image 
+          src={faviconCoin}
+          alt="coin-Icon"
+          width={150}
+          height={50}
+          className="w-28 md:w-32"
+        />
+        COIN VISUALIZER
+      </h1>
+      <span className={`text-slate-800 text-4xl sm:text-5xl md:text-6xl tracking-wide ${Jersey10Font.className} p-2`}>
+        Select a coin:
+      </span>
+      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {coinList.map((coin) => {
+          return (
+            <Link
+              href={`/${coin}`}
+              className="bg-gradient-to-br flex flex-col items-center gap-1 from-slate-50 to-neutral-200
+              hover:saturate-150 hover:brightness-110 hover:border-slate-500
+              transition duration-300 p-2 md:p-4 rounded-md
+              max-h-min h-max max-w-fit w-32 md:w-48
+              border-2 border-slate-300 hover
+              text-xl md:text-3xl text-center font-extrabold text-blue-900 group"
+              key={coin}
+            >
+              {coin.toLocaleUpperCase()}
+              <Image
+                src={`/coins-icons/${coin}.png`}
+                width={200}
+                height={200}
+                alt={`${coin} logo`}
+                className="drop-shadow-lg max-w-[90%]"
+              ></Image>
+            </Link>
+          );
+        })}
+        <AddCoinButton />
       </section>
     </main>
   );
