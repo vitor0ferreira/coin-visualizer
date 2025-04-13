@@ -6,23 +6,22 @@ import { useEffect, useState } from "react";
 
 export default function CoinListSection({coins} : {coins: string[]}){
     
-    const [coinsList, setCoinsList] = useState(coins)
+  const [coinsList, setCoinsList] = useState(() => {
+      const localData = localStorage.getItem("coins");
+      if (localData) {
+        return JSON.parse(localData);
+      } else {
+        localStorage.setItem("coins", JSON.stringify(coins));
+        return coins;
+      }
+  });
+  
+  useEffect(() => {
 
-    useEffect(()=>{
-
-        if(typeof window !== "undefined"){
-          setCoinsList(() => {
-            const localData = localStorage.getItem("coins");
-
-            if (localData) {
-              return JSON.parse(localData);
-            } else {
-              localStorage.setItem("coins", JSON.stringify(coins));
-              return coins;
-            }
-          });
-        }
-    }, [coins])
+    localStorage.setItem("coins", JSON.stringify(coinsList));
+    
+  }, [coinsList]);
+    
 
     return (
         <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">

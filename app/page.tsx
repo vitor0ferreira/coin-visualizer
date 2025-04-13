@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { coinList } from "@/lib/coinDetails";
 import { Jersey10Font } from "@/lib/fonts";

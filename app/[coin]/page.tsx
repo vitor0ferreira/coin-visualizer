@@ -26,6 +26,10 @@ export default function CoinPage() {
         ripple: "xrpusdt",
         solana: "solusdt",
         litecoin: "ltcusdt",
+        cardano: "adausdt",
+        tron: "tronusdt",
+        link: "linkusdt",
+        polkadot: "dotusdt"
       }), []
     );
 
@@ -62,23 +66,25 @@ export default function CoinPage() {
       : "text-black";
 
   return (
-    <main className="w-full min-h-screen h-full p-4 flex flex-col gap-4 items-center justify-center">
-      <header className="flex gap-6 items-center">
+    <main className="w-full min-h-screen h-full mt-8 sm:mt-0 p-4 flex flex-col gap-4 items-center justify-center">
+      <header className="flex gap-6 items-center justify-between">
         <Link
           href={"/"}
-          className="size-12 rounded-lg bg-gradient-to-b from-[#2e466e] from-5% to-[#415989] to-100% hover:from-[#415989] hover:to-[#2e466e] shadow-md flex justify-center items-center"
+          className="size-8 sm:size-12 rounded-lg bg-gradient-to-b from-[#2e466e] from-5% to-[#415989] to-100% 
+          hover:from-[#415989] hover:to-[#2e466e] shadow-md flex justify-center items-center"
         >
           <TiArrowBack size={50} color="#fff" />
         </Link>
-        <div className="flex flex-col sm:flex-row items-center justify-center">
+        <div className="flex flex-col sm:flex-row max-w-[80%] items-center gap-4 justify-center">
           <Image
             src={`/coins-icons/${coin}.png`}
             width={150}
             height={150}
-            sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 10vw, (max-width: 1200px) 20vw, 15vw"
             alt={`${coin} logo`}
             priority
             className="drop-shadow-lg"
+            style={{ maxWidth: "50%", height: "auto" }}
           ></Image>
           <span className="text-4xl sm:text-6xl md:text-8xl text-slate-900 font-bold italic">
             {coin?.toString().toLocaleUpperCase()}
@@ -87,7 +93,9 @@ export default function CoinPage() {
       </header>
 
       {coinCurrentPrice == 0 ? (
-        <Skeleton className="h-[5rem] aspect-[17/3]" />
+        <Skeleton className="h-[4rem] aspect-[17/3] flex items-center justify-center">
+            <div className="border-4 border-t-transparent border-slate-600 rounded-full size-8 bg-white animate-spin" />
+        </Skeleton>
       ) : (
         <span
           id="price"
@@ -100,10 +108,11 @@ export default function CoinPage() {
         </span>
       )}
 
-      <span className="font-semibold italic text-lg">Gráfico atualizado a cada 1 minuto.</span>
+      <span className="font-semibold italic text-center text-lg">Gráfico atualizado a cada 1 minuto.</span>
 
-      <section className="w-[80%] min-w-[280px] max-w-[1440px] min-h-[400px] h-[400px] max-h-[800px] p-4 rounded-2xl overflow-hidden bg-slate-200 shadow-[0_5px_10px_5px_rgba(0,0,0,0.15)]">
-        <p className="font-semibold text-xl sm:text-2xl mb-4 block text-center">Preço médio nas últimas 24 horas. </p>
+      <p className="font-semibold text-xl sm:text-2xl mb-4 block text-center">Preço médio nas últimas 24 horas. </p>
+      <section className="w-[80%] min-w-[280px] max-w-[1440px] min-h-[400px] 
+      h-[500px] max-h-[800px] p-4 rounded-2xl overflow-hidden bg-transparent">
         <Chart
           symbol={coinsList[coinUrl].toLocaleUpperCase()}
         />
