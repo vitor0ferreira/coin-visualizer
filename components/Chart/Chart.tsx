@@ -1,3 +1,4 @@
+'use client'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 
@@ -43,17 +44,33 @@ export default function Chart({ symbol }: ChartProps) {
   }, [symbol]);
 
   return (
-    <ResponsiveContainer width="98%" height="80%">
+    <ResponsiveContainer width="100%" height={400}>
       <LineChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" fontWeight={"700"} tickFormatter={(value) => `${value.slice(0, 2)}h`}/>
-        <YAxis domain={["auto", "auto"]} fontWeight={700} color="#ff0000" padding={{ bottom: 40 }} />
-        <Tooltip labelStyle={{fontWeight: "bold"}} />
+
+        <XAxis 
+        dataKey="time" 
+        fontWeight={"700"} 
+        tickFormatter={(value) => `${value.slice(0, 2)}h`} 
+        interval={window.innerWidth < 700 ? 'preserveEnd' : 2}
+        />
+
+        <YAxis domain={["auto", "auto"]} fontWeight={700} padding={{ bottom: 40 }}  />
+        
+        <Tooltip 
+        labelStyle={{ fontWeight: "bold"}}
+        label={"Preço"}
+        contentStyle={{ padding: "6px", borderRadius: "6px" }}
+        wrapperStyle={{ zIndex: 10 }}
+        />
+        
         <Line
           type="monotone"
           dataKey="price"
           stroke="#22aaff"
           strokeWidth={3}
+          dot={{ r: 4 }}
+          activeDot={{ r: 5 }}
         />
       </LineChart>
     </ResponsiveContainer>
