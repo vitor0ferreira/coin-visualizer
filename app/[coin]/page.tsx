@@ -27,7 +27,7 @@ export default function CoinPage() {
         solana: "solusdt",
         litecoin: "ltcusdt",
         cardano: "adausdt",
-        tron: "tronusdt",
+        tron: "trxusdt",
         link: "linkusdt",
         polkadot: "dotusdt"
       }), []
