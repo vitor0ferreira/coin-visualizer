@@ -1,31 +1,36 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import AddCoinButton from "@/components/AddCoinButton/AddCoinButton";
 import { useEffect, useState } from "react";
 
-export default function CoinListSection({coins} : {coins: string[]}){
-    
-  const [coinsList, setCoinsList] = useState(() => {
+export default function CoinListSection({ coins }: { coins: string[] }) {
+  const [coinsList, setCoinsList] = useState<string[]>([]);
+
+  // Carrega os dados do localStorage no lado do cliente
+  useEffect(() => {
+    if (typeof window !== "undefined") {
       const localData = localStorage.getItem("coins");
       if (localData) {
-        return JSON.parse(localData);
+        setCoinsList(JSON.parse(localData));
       } else {
         localStorage.setItem("coins", JSON.stringify(coins));
-        return coins;
+        setCoinsList(coins);
       }
-  });
-  
+    }
+  }, [coins]);
+
+  // Atualiza o localStorage sempre que coinsList mudar
   useEffect(() => {
-
-    localStorage.setItem("coins", JSON.stringify(coinsList));
-    
+    if (typeof window !== "undefined") {
+      localStorage.setItem("coins", JSON.stringify(coinsList));
+    }
   }, [coinsList]);
-    
 
-    return (
-        <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
-        {coinsList.map((coin:string) => {
+  return (
+    <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
+      {coinsList &&
+        coinsList.map((coin: string) => {
           return (
             <Link
               href={`/${coin}`}
@@ -48,7 +53,7 @@ export default function CoinListSection({coins} : {coins: string[]}){
             </Link>
           );
         })}
-        <AddCoinButton addCoin={setCoinsList}/>
-      </section>
-    )
+      <AddCoinButton addCoin={setCoinsList} />
+    </section>
+  );
 }
