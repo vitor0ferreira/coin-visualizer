@@ -16,19 +16,22 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    if (typeof window !== "undefined") {
-      const savedLang = localStorage.getItem("coin_visualizer_language") as Language;
-      if (savedLang === "en" || savedLang === "pt") {
-        setLanguageState(savedLang);
-      } else {
-        // Auto-detect browser language if Portuguese
-        const navLang = navigator.language || "";
-        if (navLang.toLowerCase().startsWith("pt")) {
-          setLanguageState("pt");
+    const timer = setTimeout(() => {
+      setMounted(true);
+      if (typeof window !== "undefined") {
+        const savedLang = localStorage.getItem("coin_visualizer_language") as Language;
+        if (savedLang === "en" || savedLang === "pt") {
+          setLanguageState(savedLang);
+        } else {
+          // Auto-detect browser language if Portuguese
+          const navLang = navigator.language || "";
+          if (navLang.toLowerCase().startsWith("pt")) {
+            setLanguageState("pt");
+          }
         }
       }
-    }
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const setLanguage = (lang: Language) => {

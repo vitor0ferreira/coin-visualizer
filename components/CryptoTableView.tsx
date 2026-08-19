@@ -79,13 +79,18 @@ function TableRow({
     if (!priceDirection || priceDirection === "neutral") return;
 
     const flash = priceDirection === "up" ? "tick-flash-up" : "tick-flash-down";
-    setFlashClass(flash);
+    const flashTimer = setTimeout(() => {
+      setFlashClass(flash);
+    }, 0);
 
-    const timer = setTimeout(() => {
+    const resetTimer = setTimeout(() => {
       setFlashClass("");
     }, 750);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(flashTimer);
+      clearTimeout(resetTimer);
+    };
   }, [lastUpdated, priceDirection]);
 
   const price = ticker?.price ?? 0;

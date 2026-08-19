@@ -23,29 +23,32 @@ export default function Home() {
 
   // Load state from localStorage on client side
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedCoins = localStorage.getItem("coin_visualizer_active_coins");
-      if (savedCoins) {
-        try {
-          setActiveCoinIds(JSON.parse(savedCoins));
-        } catch {
+    const timer = setTimeout(() => {
+      if (typeof window !== "undefined") {
+        const savedCoins = localStorage.getItem("coin_visualizer_active_coins");
+        if (savedCoins) {
+          try {
+            setActiveCoinIds(JSON.parse(savedCoins));
+          } catch {
+            setActiveCoinIds(CRYPTO_LIST.map((c) => c.id));
+          }
+        } else {
           setActiveCoinIds(CRYPTO_LIST.map((c) => c.id));
         }
-      } else {
-        setActiveCoinIds(CRYPTO_LIST.map((c) => c.id));
-      }
 
-      const savedFavs = localStorage.getItem("coin_visualizer_favorites");
-      if (savedFavs) {
-        try {
-          setFavorites(JSON.parse(savedFavs));
-        } catch {
+        const savedFavs = localStorage.getItem("coin_visualizer_favorites");
+        if (savedFavs) {
+          try {
+            setFavorites(JSON.parse(savedFavs));
+          } catch {
+            setFavorites(["bitcoin", "ethereum", "solana"]);
+          }
+        } else {
           setFavorites(["bitcoin", "ethereum", "solana"]);
         }
-      } else {
-        setFavorites(["bitcoin", "ethereum", "solana"]);
       }
-    }
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Save active coins to localStorage
